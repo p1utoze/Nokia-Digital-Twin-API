@@ -1,0 +1,41 @@
+Site ID,Site Name,Site Type,Customer,Project,Coordinates,Country,Geo Region
+1,Alpha,Self Support,Tawall,Tawall 2024,"(24.68773, 46.72185)",Saudi Arabia,MEA
+2,Beta,Self Support,AT&T,NAM_AT_1,"(40.71427, -74.00597)",USA,NAM
+3,Gamma,Self Support,ICE Norway,ICE 2024,"(59.91273, 10.74609)",Norway,EUR
+4,Delta,Self Support,SFR,SFR 2023_2,"(48.85341, 2.3488)",France,EUR
+5,Epsilon,Self Support,Tawall,Tawall 2024,"(21.49012, 39.18624)",Saudi Arabia,MEA
+6,Zeta,Monopole,AT&T,NAM_AT_1,"(34.05223, -118.24368)",USA,NAM
+7,Eta,Monopole,ICE Norway,ICE 2024,"(60.39299, 5.32415)",Norway,EUR
+8,Theta,Monopole,SFR,SFR 2023_2,"(43.29695, 5.38107)",France,EUR
+9,Iota,Monopole,Tawall,Tawall 2024,"(21.42664, 39.82563)",Saudi Arabia,MEA
+10,Kappa,Monopole,AT&T,NAM_AT_1,"(41.85003, -87.65005)",USA,NAM
+11,Lambda,Monopole,ICE Norway,ICE 2024,"(63.43049, 10.39506)",Norway,EUR
+12,Mu,Monopole,SFR,SFR 2023_2,"(45.74846, 4.84671)",France,EUR
+13,Nu,Rooftop,Tawall,Tawall 2024,"(24.46861, 39.61417)",Saudi Arabia,MEA
+14,Xi,Rooftop,AT&T,NAM_AT_1,"(29.76328, -95.36327)",USA,NAM
+15,Omicron,Rooftop,ICE Norway,ICE 2024,"(59.74389, 10.20449)",Norway,EUR
+16,Pi,Rooftop,SFR,SFR 2023_2,"(43.60426, 1.44367)",France,EUR
+17,Rho,Rooftop,Tawall,Tawall 2024,"(26.43442, 50.10326)",Saudi Arabia,MEA
+18,Sigma,Rooftop,AT&T,NAM_AT_1,"(39.95233, -75.16379)",USA,NAM
+19,Tau,Rooftop,ICE Norway,ICE 2024,"(58.97005, 5.73332)",Norway,EUR
+20,Upsilon,Rooftop,SFR,SFR 2024,"(43.70313, 7.26608)",France,EUR
+21,Babby John,Rooftop,Tawall,Tawall 2024,"(25.36467, 49.58764)",Saudi Arabia,MEA
+22,Gain Toe,Rooftop,AT&T,NAM_AT_1,"(33.44838, -112.07404)",USA,NAM
+23,Honny,Rooftop,ICE Norway,ICE 2024,"(58.14671, 7.9956)",Norway,EUR
+24,Jackly,Rooftop,SFR,SFR 2024,"(47.21725, -1.55336)",France,EUR
+25,Tinny,Rooftop,Tawall,Tawall 2024,"(28.43279, 45.97077)",Saudi Arabia,MEA
+26,Xi Prime,Rooftop,AT&T,NAM_AT_1,"(29.42412, -98.49363)",USA,NAM
+27,Omicron Prime,Rooftop,ICE Norway,ICE 2024,"(69.6489, 18.95508)",Norway,EUR
+28,Pi Prime,Guided Tower,SFR,SFR 2024,"(48.58392, 7.74553)",France,EUR
+29,Eta Prime,Guided Tower,Tawall,Tawall 2024,"(27.52188, 41.69073)",Saudi Arabia,MEA
+30,Zeta Prime,Guided Tower,AT&T,NAM_AT_1,"(32.71571, -117.16472)",USA,NAM
+31,Babby John,Guided Tower,ICE Norway,ICE 2024,"(67.28, 14.40501)",Norway,EUR
+32,Gain Toe,Guided Tower,SFR,SFR 2024,"(43.61093, 3.87635)",France,EUR
+33,Honny,Watertower,Tawall,Tawall 2024,"(24.49258, 39.58572)",Saudi Arabia,MEA
+34,Jackly,Watertower,AT&T,NAM_AT_1,"(32.78306, -96.80667)",USA,NAM
+35,Tinny,Watertower,ICE Norway,ICE 2024,"(68.43838, 17.4272)",Norway,EUR
+36,Xi Prime,Watertower,SFR,SFR 2024,"(44.84044, -0.5805)",France,EUR
+37,Omicron Prime,Guided Tower,Tawall,Tawall 2024,"(28.3998, 36.57151)",Saudi Arabia,MEA
+38,Pi Prime,Guided Tower,AT&T,NAM_AT_1,"(40.6501, -73.94958)",USA,NAM
+39,Eta Prime,Guided Tower,ICE Norway,ICE 2024,"(59.37762, 10.75034)",Norway,EUR
+40,Zeta Prime,Guided Tower,SFR,SFR 2024,"(50.63297, 3.05858)",France,EUR
