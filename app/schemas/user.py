@@ -13,6 +13,7 @@ class UserBase(BaseModel):
     first_name: Optional[str] = "John"
     last_name: Optional[str] = "Doe"
     language: Optional[Language] = DEFAULT_LANGUAGE
+    country: Optional[str] = None
 
 
 # Properties to receive via API on creation of an Email User

@@ -11,7 +11,7 @@ from .archivable import Archivable
 
 if TYPE_CHECKING:
     from .file import File  # noqa: F401
-    from .item import Item  # noqa: F401
+    from .item import Item, Station  # noqa: F401
 
 
 class Language(str, Enum):
@@ -63,6 +63,7 @@ class User(Base, Archivable):
         "File", backref="user", uselist=False, cascade="all, delete"
     )
     items = relationship("Item", backref="user", lazy="dynamic", cascade="all, delete")
+    country = Column(String)
 
     @hybrid_property
     def is_admin(self) -> bool:

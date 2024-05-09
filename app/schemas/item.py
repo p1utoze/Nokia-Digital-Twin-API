@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from pydantic import BaseModel, ConfigDict
 from pydantic.types import UUID4
@@ -36,3 +36,12 @@ class Item(ItemInDBBase):
 # Additional properties stored in DB
 class ItemInDB(ItemInDBBase, Archivable):
     user_id: Optional[UUID4] = None
+
+class StationBase(BaseModel):
+    name: Optional[str]
+    type: Optional[str]
+    customer: Optional[str]
+    project: Optional[str]
+    coordinates: Optional[Tuple[float, float]]
+    country: Optional[str]
+    geo_region: Optional[str]
