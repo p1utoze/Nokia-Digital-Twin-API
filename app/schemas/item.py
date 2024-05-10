@@ -45,3 +45,13 @@ class StationBase(BaseModel):
     coordinates: Optional[Tuple[float, float]]
     country: Optional[str]
     geo_region: Optional[str]
+
+
+class StationOut(StationBase):
+    pass
+
+class StationCreate(StationBase):
+    pass
+
+class StationUpdate(StationBase):
+    pass

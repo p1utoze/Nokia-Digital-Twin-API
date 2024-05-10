@@ -3,8 +3,8 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
-from app.models import Item, User
-from app.schemas import ItemCreate, ItemUpdate
+from app.models import Item, User, Station
+from app.schemas import ItemCreate, ItemUpdate, StationBase
 
 from .base import apply_changes
 

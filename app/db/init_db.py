@@ -43,8 +43,7 @@ def init_db(db: Session) -> None:
     # base.Base.metadata.create_all(bind=engine)
     # pass
 
-    stations = db.execute(select(Station)).all()
-    if not stations:
+    if not db.execute(select(Station)).all():
         create_station_data(db)
 
     user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
