@@ -1,5 +1,5 @@
 from typing import Any
-
+from urllib.parse import urlparse
 from fastapi import APIRouter, BackgroundTasks, Body, Depends, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -11,7 +11,7 @@ from app import crud, models, schemas
 from app.api import deps
 from app.api.exceptions import HTTPException
 from app.core import security
-from app.core.security import get_password_hash, settings, get_query_params
+from app.core.security import get_password_hash, settings, get_path_params
 from app.email_service.auth import send_reset_password_email
 
 router = APIRouter()
@@ -57,7 +57,7 @@ async def sso_login(
     # print(sso.redirect_uri)
     response = await sso.get_login_redirect(
         params={"prompt": "consent", "access_type": "offline"},
-        state=f"{return_url}?country={country}",
+        state=f"{return_url}{country}",
     )
     return response
 
@@ -74,8 +74,8 @@ async def sso_callback(
     Callback url automatically called by the provider at the end of the authentication process. This endpoint is not meant to be called by the client directly
     """
     sso_user: OpenID = await sso.verify_and_process(request)
-    query_params, base_url = get_query_params(sso.state)
-    token = create_sso_user(db, provider, sso_user, country=query_params["country"])
+    country, base_url = get_path_params(sso.state)
+    token = create_sso_user(db, provider, sso_user, country=country)
     return RedirectResponse(f"{base_url}?token={token}")
 
 
