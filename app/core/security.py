@@ -70,7 +70,7 @@ def create_refresh_token(user_id: UUID4) -> str:
         user_id, TokenContext.REFRESH_TOKEN, expires_delta=expires_delta
     )
 
-def get_path_params(url):
+def get_query_params(url):
   """Extracts query params as a dictionary and returns the URL without them.
 
   Args:
@@ -80,13 +80,13 @@ def get_path_params(url):
       A tuple containing a dictionary of query params and the URL without them.
   """
   parsed_url = urlparse(url)
-  path = parsed_url.path.strip("/")
-  # query_params = {}
-  # for pair in parsed_url.query.split("&"):
-  #     key, value = pair.split("=")
-  #     query_params[key] = value
-  url_without_params = parsed_url.scheme + "://" + parsed_url.netloc + "/"
-  return path, url_without_params
+  # path = parsed_url.path.strip("/")
+  query_params = {}
+  for pair in parsed_url.query.split("&"):
+      key, value = pair.split("=")
+      query_params[key] = value
+  url_without_params = parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path + "/"
+  return query_params, url_without_params
 
 
 
