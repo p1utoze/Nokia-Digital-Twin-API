@@ -1,9 +1,13 @@
-from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI, Request, Depends, status
 from starlette.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html
 from app.api.api_v1.api import api_router
 from app.core.config import EnvConfig, settings
+from fastapi.staticfiles import StaticFiles
+from fastapi.security import HTTPBasic,  HTTPBasicCredentials
+import secrets
+from app.api.exceptions import HTTPException
+
 
 app = FastAPI(
     docs_url=None,
@@ -11,8 +15,23 @@ app = FastAPI(
 )
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
+security = HTTPBasic()
+
+
+def get_current_dev_username(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = secrets.compare_digest(credentials.username, "user")
+    correct_password = secrets.compare_digest(credentials.password, "password")
+    if not (correct_username and correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
 @app.get("/docs", include_in_schema=False)
-async def custom_swagger_ui_html():
+async def custom_swagger_ui_html(username: str = Depends(get_current_dev_username)):
+    print(f"{username} accessed /docs")
     return get_swagger_ui_html(
         title=settings.PROJECT_NAME,
         openapi_url=f"/openapi.json",
@@ -21,7 +40,8 @@ async def custom_swagger_ui_html():
     )
 
 @app.get("/redoc", include_in_schema=False)
-async def custom_swagger_ui_html():
+async def custom_swagger_ui_html(username: str = Depends(get_current_dev_username)):
+    print(f"{username} accessed /redoc")
     return get_redoc_html(
         title=settings.PROJECT_NAME,
         openapi_url=f"/openapi.json",
