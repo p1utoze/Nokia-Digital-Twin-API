@@ -1,6 +1,7 @@
 import hashlib
 import random
 import string
+from urllib.parse import urlparse
 from datetime import UTC, datetime, timedelta
 from os import urandom
 from typing import Optional
@@ -68,6 +69,24 @@ def create_refresh_token(user_id: UUID4) -> str:
     return create_token(
         user_id, TokenContext.REFRESH_TOKEN, expires_delta=expires_delta
     )
+
+def get_query_params(url):
+  """Extracts query params as a dictionary and returns the URL without them.
+
+  Args:
+      url: The URL string.
+
+  Returns:
+      A tuple containing a dictionary of query params and the URL without them.
+  """
+  parsed_url = urlparse(url)
+  query_params = {}
+  for pair in parsed_url.query.split("&"):
+      key, value = pair.split("=")
+      query_params[key] = value
+  url_without_params = parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
+  return query_params, url_without_params
+
 
 
 def create_sso_confirmation_token(user_id: UUID4, sso_confirmation_code: str) -> str:
