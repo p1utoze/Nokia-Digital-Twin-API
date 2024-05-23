@@ -1,4 +1,53 @@
 services:
+  traefik:
+    image: traefik:v2.11
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CLOUDFLARE_EMAIL=${CF_EMAIL}
+      - CLOUDFLARE_DNS_API_TOKEN=${CF_API_TOKEN}
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+      #- /var/log:/var/log
+    command:
+      - --api.dashboard=true
+      - --log.level=INFO
+      #- --log.filepath=/var/log/traefik.log
+      - --accesslog=true
+      #- --accesslog.filepath=/var/log/traefik-access.log
+      - --providers.docker
+      - --providers.docker.network=proxy
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entryPoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls.certresolver=myresolver
+        ## ENABLE 2 BELOW LINES FOR HTTP Challenge
+        #- --certificatesresolvers.myresolver.acme.httpchallenge=true
+        #- --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+        #- --certificatesresolvers.myresolver.acme.tlschallenge=true
+          #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+          #- --certificatesresolvers.myresolver.acme.email=aditya.n.awati@gmail.com
+          #- --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.myresolver.acme.dnschallenge=true
+      - --certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare
+      - --certificatesresolvers.myresolver.acme.email=tutliajama@gmail.com
+      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+
+    labels:
+      - traefik.enable=true
+        #- traefik.http.routers.mydashboard.rule=Host(`flowise.plutoze.me`) && (PathPrefix(`/traefik`) || PathPrefix(`/api`))
+      - traefik.http.routers.mydashboard.rule=Host(`traefik.${DOMAIN}`)
+      - traefik.http.routers.mydashboard.service=api@internal
+      - traefik.http.routers.mydashboard.middlewares=myauth
+        #- traefik.http.routers.mydashboard.middlewares=strip
+        #- traefik.http.middlewares.strip.stripprefix.prefixes=/traefik
+      - traefik.http.middlewares.myauth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/
 
   db:
     image: postgres:15.6-alpine
@@ -6,6 +55,8 @@ services:
       - app-db-data:/var/lib/postgresql/data/pgdata
     env_file:
       - .env
+    networks:
+      - proxy
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     deploy:
@@ -19,6 +70,8 @@ services:
       PGADMIN_LISTEN_PORT: 80
     env_file:
       - .env
+    networks:
+      - proxy
     ports:
       - 5050:80
 
@@ -30,15 +83,34 @@ services:
         ENV_CONFIG: ${ENV_CONFIG-dev}
     env_file:
       - .env
+    networks:
+      - proxy
     volumes:
       - app-file-storage:/app/files
     environment:
       - ENV_CONFIG=${ENV_CONFIG-dev}
       - SERVER_NAME=${DOMAIN?Variable not set}
       - SERVER_HOST=http://${DOMAIN?Variable not set}
-    ports:
-      - 80:80
+        #ports:
+      #- 80:81
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend-api.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.backend-api.entrypoints=websecure"
+      - "traefik.docker.network=proxy"
+        #- "traefik.http.routers.backend-api.middlewares=apiauth"
+      - "traefik.http.routers.backend-api.tls.certresolver=myresolver"
+      - 'traefik.http.routers.backend-api.service=webapp'
+      - "traefik.http.services.webapp.loadbalancer.server.port=80"
+        # - traefik.http.middlewares.apiauth.basicauth.users=admin:$$apr1$$82Vn/pGa$$yLe2urQp/NpyeF8S9meSM1
+  # admin:Nokia.dsce@2024
 
 volumes:
   app-db-data:
   app-file-storage:
+  letsencrypt:
+    name: letsencrypt
+
+networks:
+    proxy:
+      name: proxy
