@@ -11,7 +11,7 @@ from app import crud, models, schemas
 from app.api import deps
 from app.api.exceptions import HTTPException
 from app.core import security
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, settings, get_query_params
 from app.email_service.auth import send_reset_password_email
 
 router = APIRouter()
@@ -49,16 +49,17 @@ async def test_sso_provider(
 @router.get("/{provider}/login")
 async def sso_login(
         request: Request,
-    *, sso: SSOBase = Depends(deps.get_generic_sso), return_url: str
+    *, sso: SSOBase = Depends(deps.get_generic_sso), country: str,  return_url: str = settings.SERVER_HOST
 ) -> Any:
     """
     Endpoint to use to login using an SSO provider. Call this endpoint to get the redirection link of the requested provider where all the authentication process between the user of the app and the provider will happen.
     """
-    print(sso.redirect_uri)
-    return await sso.get_login_redirect(
+    # print(sso.redirect_uri)
+    response = await sso.get_login_redirect(
         params={"prompt": "consent", "access_type": "offline"},
-        state=return_url,
+        state=f"{return_url}?country={country}",
     )
+    return response
 
 
 @router.get("/{provider}/callback")
@@ -73,8 +74,9 @@ async def sso_callback(
     Callback url automatically called by the provider at the end of the authentication process. This endpoint is not meant to be called by the client directly
     """
     sso_user: OpenID = await sso.verify_and_process(request)
-    token = create_sso_user(db, provider, sso_user)
-    return RedirectResponse(f"{sso.state}?token={token}")
+    query_params, base_url = get_query_params(sso.state)
+    token = create_sso_user(db, provider, sso_user, country=query_params["country"])
+    return RedirectResponse(f"{base_url}?token={token}")
 
 
 @router.post("/sso/confirm", response_model=schemas.AuthResponse)
@@ -181,7 +183,7 @@ def create_login_response(user: models.User) -> schemas.AuthResponse:
     )
 
 
-def create_sso_user(db: Session, provider: models.Provider, openid_user: OpenID) -> str:
+def create_sso_user(db: Session, provider: models.Provider, openid_user: OpenID, *, country: str = None) -> str:
     user = crud.user.get_by_sso_provider_id(
         db, sso_provider_id=openid_user.id, provider=provider
     )
@@ -202,6 +204,7 @@ def create_sso_user(db: Session, provider: models.Provider, openid_user: OpenID)
             provider=provider,
             first_name=openid_user.first_name,
             last_name=openid_user.last_name,
+            country=country,
         )
         user = crud.user.create(db, obj_in=user_in)
     user = crud.user.update_sso_confirmation_code(db, user)
