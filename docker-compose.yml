@@ -90,9 +90,7 @@ services:
     environment:
       - ENV_CONFIG=${ENV_CONFIG-dev}
       - SERVER_NAME=${DOMAIN?Variable not set}
-      - SERVER_HOST=http://${DOMAIN?Variable not set}
-        #ports:
-      #- 80:81
+      - SERVER_HOST=https://${DOMAIN?Variable not set}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend-api.rule=Host(`${DOMAIN}`)"
