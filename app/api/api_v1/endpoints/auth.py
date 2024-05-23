@@ -49,7 +49,7 @@ async def test_sso_provider(
 @router.get("/{provider}/login")
 async def sso_login(
         request: Request,
-    *, sso: SSOBase = Depends(deps.get_generic_sso), country: str,  return_url: str = settings.SERVER_HOST
+    *, sso: SSOBase = Depends(deps.get_generic_sso), return_url: str
 ) -> Any:
     """
     Endpoint to use to login using an SSO provider. Call this endpoint to get the redirection link of the requested provider where all the authentication process between the user of the app and the provider will happen.
@@ -57,7 +57,7 @@ async def sso_login(
     # print(sso.redirect_uri)
     response = await sso.get_login_redirect(
         params={"prompt": "consent", "access_type": "offline"},
-        state=f"{str(return_url).strip('/')}?country={country}",
+        state=return_url,
     )
     return response
 
@@ -75,6 +75,7 @@ async def sso_callback(
     """
     sso_user: OpenID = await sso.verify_and_process(request)
     query_params, base_url = get_query_params(sso.state)
+    print(query_params, base_url)
     token = create_sso_user(db, provider, sso_user, country=query_params.get("country"))
     return RedirectResponse(f"{base_url}?token={token}")
 
