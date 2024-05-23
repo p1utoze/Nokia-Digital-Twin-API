@@ -11,20 +11,19 @@ from app.api.exceptions import HTTPItemNotFound, HTTPNotEnoughPermissions
 router = APIRouter()
 
 
-@router.get("/{country}", response_model=List[schemas.StationOut])
+@router.get("/", response_model=List[schemas.StationOut])
 def get_country(
     *,
     db: Session = Depends(deps.get_db),
-    country: str,
     current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     """
     Get item by ID.
     """
-    data = crud.station.get_by_country(db, country=country)
+    data = crud.station.get_by_country(db, country=current_user.country)
     if not data:
         raise HTTPItemNotFound(current_user.language)
-    if not current_user.is_admin and (current_user.country != country):
+    if not current_user.is_admin and not current_user.country:
         raise HTTPNotEnoughPermissions(current_user.language)
 
     return data
