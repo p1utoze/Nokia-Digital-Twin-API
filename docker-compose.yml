@@ -57,6 +57,8 @@ services:
       - .env
     networks:
       - proxy
+    ports:
+      - 5432:5432
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     deploy:
