@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fastapi-template"
+name = "nokia-api"
 version = "0.1.0"
 description = "An API for Nokia site with file managment, user authentication and PostgreSQL database."
 authors = [
