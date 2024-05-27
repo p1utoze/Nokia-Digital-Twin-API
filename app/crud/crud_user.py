@@ -44,7 +44,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return query.first()
 
     def create(
-        self, db: Session, *, obj_in: UserCreate, role: Optional[Role] = Role.CUSTOMER
+        self, db: Session, *, obj_in: UserCreate, role: Optional[Role] = Role.USER
     ) -> User:
         obj_in_data: dict = jsonable_encoder(obj_in)
         password = obj_in_data.pop("password", None)
