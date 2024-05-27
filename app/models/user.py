@@ -25,7 +25,7 @@ DEFAULT_LANGUAGE = Language.EN
 class Role(str, Enum):
     ADMIN = "admin"
     MODERATOR = "moderator"
-    CUSTOMER = "customer"
+    USER = "user"
 
 
 class Provider(str, Enum):
@@ -45,7 +45,7 @@ class User(Base, Archivable):
     # Authentication
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String)
-    role = Column(String, default=Role.CUSTOMER, nullable=False)
+    role = Column(String, default=Role.USER, nullable=False)
     language = Column(String, default=DEFAULT_LANGUAGE, nullable=False)
     confirmed = Column(Boolean, default=False)
     sso_confirmation_code = Column(String)
@@ -64,6 +64,7 @@ class User(Base, Archivable):
     )
     items = relationship("Item", backref="user", lazy="dynamic", cascade="all, delete")
     country = Column(String)
+    customer = Column(String)
 
     @hybrid_property
     def is_admin(self) -> bool:
@@ -75,7 +76,7 @@ class User(Base, Archivable):
 
     @hybrid_property
     def is_customer(self) -> bool:
-        return self.role == Role.CUSTOMER
+        return self.role == Role.USER
 
     @hybrid_property
     def full_name(self) -> str:
