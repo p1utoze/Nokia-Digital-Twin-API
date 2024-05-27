@@ -34,7 +34,7 @@ async def create_user(
     background_tasks: BackgroundTasks,
     db: Session = Depends(deps.get_db),
     user_in: schemas.UserCreate,
-    role: Role = Role.CUSTOMER,
+    role: Role = Role.USER,
     current_user: models.User = Depends(deps.require_role(Role.ADMIN)),
 ) -> Any:
     """
