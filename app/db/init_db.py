@@ -52,5 +52,6 @@ def init_db(db: Session) -> None:
             email=settings.FIRST_SUPERUSER,
             password=settings.FIRST_SUPERUSER_PASSWORD,
             country="USA",
+            customer="NAM_AT_1",
         )
         user = crud.user.create(db, obj_in=user_in, role=Role.ADMIN)  # noqa: F841
