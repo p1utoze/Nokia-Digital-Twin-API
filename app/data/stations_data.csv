@@ -1,0 +1,41 @@
+name,coordinates,type,project,country,geo_region,customer
+Alpha,"[20.54,44.82]",Self Support,Tawall 2024,Saudi Arabia,MEA,Tawall
+Epsilon,"[27.63,41.96]",Self Support,Tawall 2024,Saudi Arabia,MEA,Tawall
+lota,"[18.47,42.59]",Monopole,Tawall 2024,Saudi Arabia,MEA,Tawall
+Nu,"[25.21,49.15]",Rooftop,Tawall 2024,Saudi Arabia,MEA,Tawall
+Rho,"[23.88,45.39]",Rooftop,Tawall 2024,Saudi Arabia,MEA,Tawall
+Babby John,"[28.96,36.42]",Rooftop,Tawall 2024,Saudi Arabia,MEA,Tawall
+Tinny,"[22.19,38.51]",Rooftop,Tawall 2024,Saudi Arabia,MEA,Tawall
+Eta Prime,"[19.84,39.26]",Guided Tower,Tawall 2024,Saudi Arabia,MEA,Tawall
+Honny,"[21.34,42.21]",Watertower,Tawall 2024,Saudi Arabia,MEA,Tawall
+Omicron Prime,"[26.17,50.24]",Guided Tower,Tawall 2024,Saudi Arabia,MEA,Tawall
+Beta,"[48.86,-97.16]",Self Support,NAM_AT_1,USA,NAM,AT&T
+Zeta,"[44.97,-123.09]",Monopole,NAM_AT_1,USA,NAM,AT&T
+Kappa,"[35.61,-106.07]",Monopole,NAM_AT_1,USA,NAM,AT&T
+Xi,"[41.51,-71.28]",Rooftop,NAM_AT_1,USA,NAM,AT&T
+Sigma,"[30.27,-81.66]",Rooftop,NAM_AT_1,USA,NAM,AT&T
+Gain Toe,"[38.58,-121.49]",Rooftop,NAM_AT_1,USA,NAM,AT&T
+Xi Prime,"[47.04,-109.53]",Rooftop,NAM_AT_1,USA,NAM,AT&T
+Zeta Prime,"[43.61,-116.2]",Guided Tower,NAM_AT_1,USA,NAM,AT&T
+Jackly,"[37.77,-122.42]",Watertower,NAM_AT_1,USA,NAM,AT&T
+Pi Prime,"[40.74,-73.99]",Guided Tower,NAM_AT_1,USA,NAM,AT&T
+Gamma,"[60.47,8.47]",Self Support,ICE 2024,Norway,EUR,ICE Norway
+Eta,"[59.91,10.75]",Monopole,ICE 2024,Norway,EUR,ICE Norway
+Lambda,"[62.16,6.12]",Monopole,ICE 2024,Norway,EUR,ICE Norway
+Omicron,"[63.44,10.4]",Rooftop,ICE 2024,Norway,EUR,ICE Norway
+Tau,"[61.05,4.71]",Rooftop,ICE 2024,Norway,EUR,ICE Norway
+Honny,"[58.88,5.74]",Rooftop,ICE 2024,Norway,EUR,ICE Norway
+Tinny,"[67.3,14.52]",Rooftop,ICE 2024,Norway,EUR,ICE Norway
+Babby John,"[65.06,13.35]",Guided Tower,ICE 2024,Norway,EUR,ICE Norway
+Eta Prime,"[59.92,10.68]",Guided Tower,ICE 2024,Norway,EUR,ICE Norway
+Omicron Prime,"[68.8,15.64]",Watertower,ICE 2024,Norway,EUR,ICE Norway
+Delta,"[46.23,2.21]",Self Support,SFR 2023_2,France,EUR,SFR
+Theta,"[43.6,1.44]",Monopole,SFR 2023_2,France,EUR,SFR
+Mu,"[48.86,2.35]",Monopole,SFR 2023_2,France,EUR,SFR
+Pi,"[45.19,5.73]",Rooftop,SFR 2023_2,France,EUR,SFR
+Upsilon,"[43.3,5.37]",Rooftop,SFR 2024,France,EUR,SFR
+Jackly,"[49.19,2.38]",Rooftop,SFR 2024,France,EUR,SFR
+Pi Prime,"[48.87,2.34]",Guided Tower,SFR 2024,France,EUR,SFR
+Gain Toe,"[43.7,7.27]",Guided Tower,SFR 2024,France,EUR,SFR
+Xi Prime,"[46.15,3.43]",Watertower,SFR 2024,France,EUR,SFR
+Zeta Prime,"[48.58,7.75]",Guided Tower,SFR 2024,France,EUR,SFR

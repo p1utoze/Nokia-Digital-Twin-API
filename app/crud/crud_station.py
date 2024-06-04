@@ -10,14 +10,22 @@ from .base import apply_changes
 
 class CRUDStation(CRUDBase[Station, StationCreate, StationUpdate]):
     def get_by_country(
-        self, db: Session, *, country: str
+        self, db: Session, *, country: str, station_name: str = None
     ) -> Optional[Station]:
-        return db.query(self.model).filter(Station.country == country).all()
+        query = db.query(self.model).filter(Station.country == country)
+        if station_name:
+            query = query.filter(Station.name == station_name)
+        return query.all()
 
     def get_by_customer(
             self, db: Session, *, customer: str
     ) -> Optional[Station]:
         return db.query(self.model).filter(Station.customer == customer).all()
+
+    def get_by_customer_and_country(
+            self, db: Session, *, customer: str, country: str
+    ) -> Optional[Station]:
+        return db.query(self.model).filter(Station.customer == customer, Station.country == country).all()
 
 
 station = CRUDStation(Station)

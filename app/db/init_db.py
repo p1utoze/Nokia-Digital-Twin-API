@@ -13,23 +13,30 @@ from app.models import Station
 # make sure all SQL Alchemy models are imported (app.db.base) before initializing DB
 # otherwise, SQL Alchemy might fail to initialize relationships properly
 
-def create_station_data(session: Session):
+def create_dummy_user(session: Session):
     data_path = PROJECT_ROOT / "data" / "Telecom Sites Dummy Data(Sites).csv"
+    with open(data_path, "r") as f:
+        reader = csv.reader(f)
+        next(reader)
+        
+
+def create_station_data(session: Session):
+    data_path = PROJECT_ROOT / "data" / "stations_data.csv"
     with open(data_path, "r") as f:
         reader = csv.reader(f)
         next(reader)
         for i, row in enumerate(reader):
             # print(row, row.__len__())
-            coords = row[5].strip()[1:-1].split(", ")
-            print(coords, coords.__len__() == 2)
+            coords = eval(row[1])
+            # print(coords, coords.__len__() == 2)
             station = schemas.item.StationBase(
-                name=row[1],
-                type=row[2],
-                customer=row[3],
-                project=row[4],
+                name=row[0],
                 coordinates=coords if coords.__len__() == 2 else None,
-                country=row[6],  # noqa: E231
-                geo_region=row[7]
+                type=row[2],
+                project=row[3],
+                country=row[4],  # noqa: E231
+                geo_region=row[5],
+                customer=row[6],
             )
             session.add(Station(**station.model_dump()))
 
@@ -55,3 +62,5 @@ def init_db(db: Session) -> None:
             customer="NAM_AT_1",
         )
         user = crud.user.create(db, obj_in=user_in, role=Role.ADMIN)  # noqa: F841
+
+
